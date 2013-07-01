@@ -1,0 +1,29 @@
+# Setup window for plotting
+graph = PhysGraph(2, radius=0.001, dot='True', dot_size=12)
+# Setup Display window for visualization 
+scene = display(width = 640, height = 480, background = color.white, range = 2.5, title = "VPython Test")
+# Create object for visualization
+ball = sphere(color = color.blue, radius = 0.22)
+ball2 = sphere(color = color.red, radius = 0.3)
+# Create a track behind object to visualize trajectory
+trail = curve(color = color.green, radius = 0.01)
+# Create small sphere to mark the origin in Display window
+origin = sphere(pos=vector(0,0,0), color = color.yellow, radius = 0.04)
+
+# CALCULATION LOOP(Motion Prediction and Visualization)
+# ===========================================
+while t < 2:
+    #Calculate Net Force
+    #EDIT THIS (next one line; add more lines if necessary)
+    Fnet=vector(-ball.q*ball2.q/pow((ball2.pos.x - ball.pos.x)*abs(ball.vel.x),2),0,0)
+    Fnet2=vector(ball.q*ball2.q/pow((ball.pos.x - ball2.pos.x)*abs(ball2.vel.x),2),0,0)
+    #Predict new velocity (Insert Newton's 2nd Law here)
+    #EDIT THIS (next one line)
+    ball.vel = ball.vel + (Fnet/ball.m)*deltat
+    ball2.vel = ball2.vel + (Fnet2/ball2.m)*deltat
+    #Predict new position
+    #EDIT THIS (next one line)
+    ball.pos = ball.pos + ball.vel*deltat
+    ball2.pos = ball2.pos + ball2.vel*deltat
+    # advance the clock
+    t = t + deltat
